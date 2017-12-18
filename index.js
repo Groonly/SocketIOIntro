@@ -2,7 +2,7 @@ var express = require('express');
 var socket = require('socket.io');
 //App setup
 var app = express();
-
+var std;
 var server = app.listen(4000, function(){
   console.log('listen to reequests on port 4000');
 });
@@ -10,8 +10,12 @@ var server = app.listen(4000, function(){
 //Running C++ file and handle output, displaying it in console
 var execFile = require('child_process').execFile;
 var program = "a";
-execFile(program,[], function(error, stdout, stderr){
+var child = execFile(program,[], function(error, stdout, stderr){
+    std = stdout.split("\n").slice().map(function(line){
+      return parseInt(line); 
+    });
     console.log('C++ program output ', stdout);
+    return std;
 });
 
 //Static files
@@ -29,7 +33,12 @@ io.on('connection', (socket) =>{
   });
   //Detect typing
   socket.on('typing', function(data){
-    socket.broadcast.emit('typing', data);
+    if(data == 'Joel'){
+      socket.broadcast.emit('typing', std);
+    }
+    else{
+      socket.broadcast.emit('typing', data);
+  }
   });
 
 });

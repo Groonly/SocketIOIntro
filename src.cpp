@@ -3,5 +3,6 @@
 using namespace std;
 int main(void){
 
-  cout << "Hej" << endl;
+  cout << "17" << endl;
+  cout << "4" << endl;
 }
