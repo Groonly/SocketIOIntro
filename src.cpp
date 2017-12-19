@@ -1,8 +1,7 @@
 #include <iostream>
 
 using namespace std;
-int main(void){
-
-  cout << "17" << endl;
+int main(int argc, char *argv[]){
+  cout << argv[1] << endl;
   cout << "4";
 }

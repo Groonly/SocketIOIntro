@@ -10,7 +10,8 @@ var server = app.listen(4000, function(){
 //Running C++ file and handle output, displaying it in console
 var execFile = require('child_process').execFile;
 var program = "a";
-var child = execFile(program,[], function(error, stdout, stderr){
+var under = 7;
+var child = execFile(program,[under], function(error, stdout, stderr){
     std = stdout.split("\n").map(std => Number(std));
     console.log('C++ program output ', stdout);
     return std;
@@ -32,7 +33,7 @@ io.on('connection', (socket) =>{
   //Detect typing
   socket.on('typing', function(data){
     if(data == 'Joel'){
-      socket.broadcast.emit('typing', std[0]);
+      socket.broadcast.emit('typing', std[1]);
     }
     else{
       socket.broadcast.emit('typing', data);
