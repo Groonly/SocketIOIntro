@@ -8,14 +8,14 @@ var server = app.listen(4000, function(){
 });
 
 //Running C++ file and handle output, displaying it in console
-var execFile = require('child_process').execFile;
+/*var execFile = require('child_process').execFile;
 var program = "a";
 var under = 1;
 var child = execFile(program,[under], function(error, stdout, stderr){
     std = stdout.split("\n").map(std => Number(std));
     console.log('C++ program output ', stdout);
     return std;
-});
+});*/
 
 //Static files
 app.use(express.static('public'));
@@ -32,12 +32,18 @@ io.on('connection', (socket) =>{
   });
   //Detect typing
   socket.on('typing', function(data){
-    if(data == 'Joel'){
-      socket.broadcast.emit('typing', std[0]);
-    }
-    else{
-      socket.broadcast.emit('typing', data);
-  }
+    socket.broadcast.emit('typing', data);
+  });
+    //Running C++ file and handle output, displaying it in console
+  socket.on('cpp',function(data){
+    var execFile = require('child_process').execFile;
+    var program = "a";
+    var under = 1;
+    var child = execFile(program,[under], function(error, stdout, stderr){
+        std = stdout.split("\n").map(std => Number(std));
+        console.log('C++ program output ', stdout);
+        return std;
+    });
   });
 
 });

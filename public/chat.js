@@ -7,7 +7,7 @@ var   handle = document.getElementById('handle');
 var   btn = document.getElementById('send');
 var   output = document.getElementById('output');
 var   feedback = document.getElementById('feedback')
-
+var   cpp = document.getElementById('cpp');
 //Emitt events
 btn.addEventListener('click', function(){
   socket.emit('chat',{
@@ -15,6 +15,10 @@ btn.addEventListener('click', function(){
       handle: handle.value
   });
   message.value = "";
+});
+
+cpp.addEventListener('click', function(){
+  socket.emit('cpp',handle.value);
 });
 
 message.addEventListener('keypress', function(){
