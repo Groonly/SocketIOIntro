@@ -34,16 +34,18 @@ io.on('connection', (socket) =>{
   socket.on('typing', function(data){
     socket.broadcast.emit('typing', data);
   });
-    //Running C++ file and handle output, displaying it in console
+  //Running C++ file and handle output, displaying it in console
   socket.on('cpp',function(data){
     var execFile = require('child_process').execFile;
     var program = "a";
     var under = 1;
     var child = execFile(program,[under], function(error, stdout, stderr){
         std = stdout.split("\n").map(std => Number(std));
-        console.log('C++ program output ', stdout);
+        console.log('C++ program output ', std);
         return std;
     });
+    //Sending stdout over socket io
+    io.sockets.emit('cpp', std);
   });
 
 });
